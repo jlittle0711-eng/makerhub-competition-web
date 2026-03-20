@@ -1,25 +1,20 @@
-<section class="content">
-    <h2>Competitions</h2>
-    <div id="competition-grid"></div>
-</section>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Competitions</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../styles.css">
+</head>
 
-<script src="../data/competitions.js"></script>
-<script>
-    const grid = document.getElementById("competition-grid");
+<body>
 
-    competitions.forEach(comp => {
-        const card = document.createElement("div");
-        card.className = "card";
+<div id="nav-container"></div>
 
-        card.innerHTML = `
-            <h3>${comp.title}</h3>
-            <p>${comp.description}</p>
-            <strong>Skills:</strong>
-            <ul>
-                ${comp.skills.map(skill => `<li>${skill}</li>`).join("")}
-            </ul>
-        `;
+<script src="../loadComponents.js"></script>
 
-        grid.appendChild(card);
-    });
-</script>
+<h1>Competitions</h1>
+
+<p>Explore active and upcoming competitions.</p>
+
+</body>
+</html>

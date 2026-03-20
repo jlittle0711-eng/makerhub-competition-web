@@ -1,9 +1,12 @@
-async function loadComponent(id, file) {
-    const res = await fetch(file);
-    const text = await res.text();
-    document.getElementById(id).innerHTML = text;
-}
+document.addEventListener("DOMContentLoaded", function () {
+    const navContainer = document.getElementById("nav-container");
 
-loadComponent("header", "components/header.html");
-loadComponent("footer", "components/footer.html");
-loadComponent("cta", "components/cta_block.html");
+    if (navContainer) {
+        fetch("components/nav.html")
+            .then(response => response.text())
+            .then(data => {
+                navContainer.innerHTML = data;
+            })
+            .catch(error => console.error("Error loading nav:", error));
+    }
+});

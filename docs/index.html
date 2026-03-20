@@ -1,31 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+    <title>MakerHub Competition</title>
     <meta charset="UTF-8">
-    <title>MakerHub Competition System</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<div id="nav-placeholder"></div>
-
-<div id="page-content"></div>
+<div id="nav-container"></div>
 
 <script src="loadComponents.js"></script>
-<script>
-    loadComponent("nav-placeholder", "components/nav.html");
 
-    function loadPage(page) {
-        fetch(`pages/${page}.html`)
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("page-content").innerHTML = data;
-            });
-    }
+<h1>MakerHub Competition System</h1>
 
-    // default page
-    loadPage("home");
-</script>
+<p>Where Skills Are Built, Tested, and Proven</p>
 
 </body>
 </html>
