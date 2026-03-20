@@ -1,7 +1,7 @@
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: black;
+    font-family: Arial;
+    background: black;
     color: white;
 }
 
@@ -31,6 +31,6 @@ body {
 .cta-button {
     margin-top: 20px;
     padding: 12px 25px;
-    background-color: black;
+    background: black;
     color: #d4af37;
 }

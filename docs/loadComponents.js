@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.text())
             .then(data => {
                 navContainer.innerHTML = data;
-            })
-            .catch(error => console.error("Error loading nav:", error));
+            });
     }
 });
