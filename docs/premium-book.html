@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>MakerHub Premium Book</title>
+<link rel="stylesheet" href="styles.css">
+
+<style>
+body {
+    padding: 20px;
+}
+
+/* FILTER BAR */
+.filter-bar {
+    margin-bottom: 20px;
+}
+
+.filter-bar select {
+    padding: 8px;
+    margin-right: 10px;
+}
+
+/* COMPETITION CARD */
+.pb-card {
+    border: 2px solid red;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.pb-title {
+    color: #d4af37;
+    text-decoration: underline;
+}
+
+.pb-section {
+    margin-top: 10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="nav-container"></div>
+<script src="loadComponents.js"></script>
+
+<h1>MakerHub Premium Book</h1>
+
+<p>
+Browse all competitions, requirements, and award opportunities.
+</p>
+
+<!-- FILTERS -->
+<div class="filter-bar">
+    <select id="categoryFilter">
+        <option value="">All Categories</option>
+    </select>
+
+    <select id="levelFilter">
+        <option value="">All Levels</option>
+    </select>
+</div>
+
+<!-- CONTENT -->
+<div id="premium-list"></div>
+
+<!-- DATA -->
+<script src="data/competitions.js?v=2"></script>
+
+<script>
+const container = document.getElementById("premium-list");
+const categoryFilter = document.getElementById("categoryFilter");
+const levelFilter = document.getElementById("levelFilter");
+
+/* POPULATE FILTERS */
+const categories = [...new Set(competitions.map(c => c.category))];
+const levels = [...new Set(competitions.map(c => c.level))];
+
+categories.forEach(cat => {
+    const opt = document.createElement("option");
+    opt.value = cat;
+    opt.textContent = cat;
+    categoryFilter.appendChild(opt);
+});
+
+levels.forEach(lvl => {
+    const opt = document.createElement("option");
+    opt.value = lvl;
+    opt.textContent = lvl;
+    levelFilter.appendChild(opt);
+});
+
+/* RENDER FUNCTION */
+function renderList() {
+    const selectedCategory = categoryFilter.value;
+    const selectedLevel = levelFilter.value;
+
+    container.innerHTML = "";
+
+    competitions
+        .filter(c => !selectedCategory || c.category === selectedCategory)
+        .filter(c => !selectedLevel || c.level === selectedLevel)
+        .forEach(comp => {
+
+            const div = document.createElement("div");
+            div.className = "pb-card";
+
+            div.innerHTML = `
+                <h2 class="pb-title">
+                    <a href="competition.html?id=${comp.id}" style="color:#d4af37;">
+                        ${comp.title}
+                    </a>
+                </h2>
+
+                <p>${comp.description}</p>
+
+                <p><strong>Level:</strong> ${comp.level}</p>
+                <p><strong>Category:</strong> ${comp.category}</p>
+                <p><strong>Age Group:</strong> ${comp.age_group}</p>
+
+                <div class="pb-section">
+                    <strong>Specifications:</strong>
+                    <ul>
+                        ${Object.entries(comp.specs).map(([k,v]) => `<li>${k}: ${v}</li>`).join("")}
+                    </ul>
+                </div>
+
+                <div class="pb-section">
+                    <strong>Rules:</strong>
+                    <ul>
+                        ${comp.rules.map(r => `<li>${r}</li>`).join("")}
+                    </ul>
+                </div>
+
+                <div class="pb-section">
+                    <strong>Judging:</strong>
+                    <ul>
+                        ${Object.entries(comp.judging).map(([k,v]) => `<li>${k}: ${v}%</li>`).join("")}
+                    </ul>
+                </div>
+
+                <div class="pb-section">
+                    <strong>Awards:</strong>
+                    <ul>
+                        ${Object.entries(comp.awards).map(([k,v]) => `<li>${k}: ${v}</li>`).join("")}
+                    </ul>
+                </div>
+
+                <div class="pb-section">
+                    <strong>Schedule:</strong>
+                    <ul>
+                        <li>Entry Deadline: ${comp.schedule.entry_deadline}</li>
+                        <li>Event Date: ${comp.schedule.event_date}</li>
+                    </ul>
+                </div>
+            `;
+
+            container.appendChild(div);
+        });
+}
+
+/* FILTER EVENTS */
+categoryFilter.addEventListener("change", renderList);
+levelFilter.addEventListener("change", renderList);
+
+/* INITIAL LOAD */
+renderList();
+</script>
+
+</body>
+</html>
