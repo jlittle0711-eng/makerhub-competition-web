@@ -4,35 +4,6 @@
 <meta charset="UTF-8">
 <title>MakerHub Ecosystem</title>
 <link rel="stylesheet" href="styles.css">
-
-<style>
-.eco-card {
-    border: 2px solid red;
-    padding: 15px;
-    margin: 15px;
-    cursor: pointer;
-}
-
-.eco-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 0 12px #d4af37;
-}
-
-.eco-title {
-    color: #d4af37;
-    text-decoration: underline;
-}
-
-.badge {
-    display:inline-block;
-    padding:4px 8px;
-    margin-bottom:5px;
-    background:#333;
-    color:#fff;
-    font-size:12px;
-}
-</style>
-
 </head>
 
 <body>
@@ -42,71 +13,42 @@
 
 <h1>MakerHub Ecosystem</h1>
 
-<p>Browse all competitions and exhibits in one unified system.</p>
-
-<select id="typeFilter">
-    <option value="">All Types</option>
-    <option value="competition">Competitions</option>
-    <option value="exhibit">Exhibits</option>
-</select>
-
 <div id="eco-list"></div>
 
-<script src="data/competitions.js?v=2"></script>
-<script src="data/exhibits.js?v=1"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+<script src="firebase-config.js"></script>
+<script src="live-data.js"></script>
 
 <script>
 const container = document.getElementById("eco-list");
-const typeFilter = document.getElementById("typeFilter");
 
-function render() {
+async function render() {
+    const items = await loadLiveEntries();
 
     container.innerHTML = "";
 
-    let items = [];
+    items.forEach(item => {
+        const div = document.createElement("div");
+        div.style.border = "2px solid red";
+        div.style.margin = "15px";
+        div.style.padding = "15px";
+        div.style.cursor = "pointer";
 
-    competitions.forEach(c => {
-        items.push({...c, type: "competition"});
+        div.onclick = () => {
+            alert("Detail page integration next step");
+        };
+
+        div.innerHTML = `
+            <strong>${item.type.toUpperCase()}</strong>
+            <h2 style="color:#d4af37;">${item.title}</h2>
+            <p>${item.description}</p>
+        `;
+
+        container.appendChild(div);
     });
-
-    exhibits.forEach(e => {
-        items.push({...e, type: "exhibit"});
-    });
-
-    const filter = typeFilter.value;
-
-    items
-        .filter(i => !filter || i.type === filter)
-        .forEach(item => {
-
-            const div = document.createElement("div");
-            div.className = "eco-card";
-
-            div.onclick = () => {
-                if (item.type === "competition") {
-                    window.location.href = `competition.html?id=${item.id}`;
-                } else {
-                    window.location.href = `exhibit.html?id=${item.id}`;
-                }
-            };
-
-            div.innerHTML = `
-                <div class="badge">${item.type.toUpperCase()}</div>
-
-                <h2 class="eco-title">${item.title}</h2>
-
-                <p>${item.description}</p>
-
-                <p><strong>Category:</strong> ${item.category}</p>
-                <p><strong>Level:</strong> ${item.level}</p>
-                <p><strong>Status:</strong> ${item.status}</p>
-            `;
-
-            container.appendChild(div);
-        });
 }
-
-typeFilter.addEventListener("change", render);
 
 render();
 </script>

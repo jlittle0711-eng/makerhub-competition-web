@@ -12,7 +12,7 @@
 
 <button onclick="logout()">Logout</button>
 
-<h2>Create Entry</h2>
+<h2>Create Entry (Draft)</h2>
 
 <select id="type">
     <option value="competition">Competition</option>
@@ -22,11 +22,18 @@
 <input id="title" placeholder="Title"><br><br>
 <textarea id="description" placeholder="Description"></textarea><br><br>
 
-<button onclick="submitEntry()">Submit</button>
+<button onclick="submitEntry()">Save Draft</button>
 
-<h2>Database Entries</h2>
+<h2>Entries</h2>
 
-<div id="list"></div>
+<h3>Draft</h3>
+<div id="drafts"></div>
+
+<h3>Approved</h3>
+<div id="approved"></div>
+
+<h3>Live</h3>
+<div id="live"></div>
 
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
@@ -36,15 +43,11 @@
 
 <script>
 auth.onAuthStateChanged(user => {
-    if (!user) {
-        window.location.href = "admin.html";
-    }
+    if (!user) window.location.href = "admin.html";
 });
 
 function logout() {
-    auth.signOut().then(() => {
-        window.location.href = "admin.html";
-    });
+    auth.signOut().then(() => window.location.href = "admin.html");
 }
 
 function submitEntry() {
@@ -56,33 +59,64 @@ function submitEntry() {
         type,
         title,
         description,
+        status: "draft",
         created: new Date()
     }).then(() => {
-        alert("Saved to database");
+        alert("Draft saved");
         loadEntries();
     });
 }
 
+function updateStatus(id, status) {
+    db.collection("entries").doc(id).update({ status }).then(loadEntries);
+}
+
+function renderItem(doc) {
+    const item = doc.data();
+
+    const div = document.createElement("div");
+    div.style.border = "1px solid #ccc";
+    div.style.margin = "10px";
+    div.style.padding = "10px";
+
+    div.innerHTML = `
+        <strong>${item.type}</strong>
+        <h3>${item.title}</h3>
+        <p>${item.description}</p>
+    `;
+
+    if (item.status === "draft") {
+        div.innerHTML += `
+            <button onclick="updateStatus('${doc.id}','approved')">Approve</button>
+        `;
+    }
+
+    if (item.status === "approved") {
+        div.innerHTML += `
+            <button onclick="updateStatus('${doc.id}','live')">Publish</button>
+        `;
+    }
+
+    return div;
+}
+
 function loadEntries() {
-    const container = document.getElementById("list");
-    container.innerHTML = "";
+    const drafts = document.getElementById("drafts");
+    const approved = document.getElementById("approved");
+    const live = document.getElementById("live");
+
+    drafts.innerHTML = "";
+    approved.innerHTML = "";
+    live.innerHTML = "";
 
     db.collection("entries").get().then(snapshot => {
         snapshot.forEach(doc => {
             const item = doc.data();
+            const div = renderItem(doc);
 
-            const div = document.createElement("div");
-            div.style.border = "1px solid #ccc";
-            div.style.margin = "10px";
-            div.style.padding = "10px";
-
-            div.innerHTML = `
-                <strong>${item.type}</strong>
-                <h3>${item.title}</h3>
-                <p>${item.description}</p>
-            `;
-
-            container.appendChild(div);
+            if (item.status === "draft") drafts.appendChild(div);
+            if (item.status === "approved") approved.appendChild(div);
+            if (item.status === "live") live.appendChild(div);
         });
     });
 }
