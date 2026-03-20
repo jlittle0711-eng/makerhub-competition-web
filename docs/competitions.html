@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <title>Competitions</title>
 <link rel="stylesheet" href="styles.css">
+
+<style>
+a.comp-link {
+    color: #d4af37;
+    text-decoration: underline;
+    transition: all 0.2s ease;
+}
+
+a.comp-link:hover {
+    color: #ffffff;
+    text-shadow: 0 0 8px #d4af37;
+}
+</style>
+
 </head>
 
 <body>
@@ -11,15 +25,13 @@
 <div id="nav-container"></div>
 <script src="loadComponents.js"></script>
 
-<h1>Competitions (CONFIRM)</h1>
+<h1>Competitions</h1>
 
 <div id="competition-list"></div>
 
 <script src="data/competitions.js"></script>
 
 <script>
-console.log("COMPETITIONS PAGE LOADED");
-
 const container = document.getElementById("competition-list");
 
 competitions.forEach(comp => {
@@ -30,8 +42,8 @@ competitions.forEach(comp => {
 
     div.innerHTML = `
         <h2>
-            <a href="competition.html?id=${comp.id}" style="color:#d4af37;">
-                ${comp.title} (CLICK ME)
+            <a class="comp-link" href="competition.html?id=${comp.id}">
+                ${comp.title}
             </a>
         </h2>
         <p>${comp.description}</p>
