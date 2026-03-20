@@ -1,4 +1,25 @@
 <section class="content">
     <h2>Competitions</h2>
-    <p>Students compete in real-world engineering challenges.</p>
+    <div id="competition-grid"></div>
 </section>
+
+<script src="../data/competitions.js"></script>
+<script>
+    const grid = document.getElementById("competition-grid");
+
+    competitions.forEach(comp => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <h3>${comp.title}</h3>
+            <p>${comp.description}</p>
+            <strong>Skills:</strong>
+            <ul>
+                ${comp.skills.map(skill => `<li>${skill}</li>`).join("")}
+            </ul>
+        `;
+
+        grid.appendChild(card);
+    });
+</script>
