@@ -6,15 +6,22 @@
 <link rel="stylesheet" href="styles.css">
 
 <style>
-a.comp-link {
-    color: #d4af37;
-    text-decoration: underline;
+.comp-card {
+    border: 2px solid red;
+    padding: 15px;
+    margin: 15px;
+    cursor: pointer;
     transition: all 0.2s ease;
 }
 
-a.comp-link:hover {
-    color: #ffffff;
-    text-shadow: 0 0 8px #d4af37;
+.comp-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 12px #d4af37;
+}
+
+.comp-title {
+    color: #d4af37;
+    text-decoration: underline;
 }
 </style>
 
@@ -29,23 +36,23 @@ a.comp-link:hover {
 
 <div id="competition-list"></div>
 
-<script src="data/competitions.js"></script>
+<!-- ✅ CACHE-BUSTED -->
+<script src="data/competitions.js?v=2"></script>
 
 <script>
 const container = document.getElementById("competition-list");
 
 competitions.forEach(comp => {
     const div = document.createElement("div");
-    div.style.border = "2px solid red";
-    div.style.padding = "15px";
-    div.style.margin = "15px";
+    div.className = "comp-card";
+
+    // ✅ WHOLE CARD CLICKABLE
+    div.onclick = () => {
+        window.location.href = `competition.html?id=${comp.id}`;
+    };
 
     div.innerHTML = `
-        <h2>
-            <a class="comp-link" href="competition.html?id=${comp.id}">
-                ${comp.title}
-            </a>
-        </h2>
+        <h2 class="comp-title">${comp.title}</h2>
         <p>${comp.description}</p>
         <p><strong>Level:</strong> ${comp.level}</p>
         <p><strong>Category:</strong> ${comp.category}</p>
