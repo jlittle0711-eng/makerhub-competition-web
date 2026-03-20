@@ -13,5 +13,30 @@
 
 <h1>Competitions</h1>
 
+<div id="competition-list"></div>
+
+<script src="data/competitions.js"></script>
+
+<script>
+const container = document.getElementById("competition-list");
+
+competitions.forEach(comp => {
+    const div = document.createElement("div");
+    div.style.border = "1px solid #d4af37";
+    div.style.padding = "15px";
+    div.style.margin = "15px";
+
+    div.innerHTML = `
+        <h2>${comp.title}</h2>
+        <p>${comp.description}</p>
+        <p><strong>Level:</strong> ${comp.level}</p>
+        <p><strong>Category:</strong> ${comp.category}</p>
+        <p><strong>Status:</strong> ${comp.status}</p>
+    `;
+
+    container.appendChild(div);
+});
+</script>
+
 </body>
 </html>
