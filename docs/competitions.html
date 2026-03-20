@@ -27,7 +27,11 @@ competitions.forEach(comp => {
     div.style.margin = "15px";
 
     div.innerHTML = `
-        <h2>${comp.title}</h2>
+        <h2>
+            <a href="competition.html?id=${comp.id}" style="color:#d4af37; text-decoration:none;">
+                ${comp.title}
+            </a>
+        </h2>
         <p>${comp.description}</p>
         <p><strong>Level:</strong> ${comp.level}</p>
         <p><strong>Category:</strong> ${comp.category}</p>

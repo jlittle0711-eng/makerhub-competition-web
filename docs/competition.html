@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Competition</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div id="nav-container"></div>
+<script src="loadComponents.js"></script>
+
+<div id="competition-detail" style="padding:20px;"></div>
+
+<script src="data/competitions.js"></script>
+
+<script>
+// Get ID from URL
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+// Find matching competition
+const comp = competitions.find(c => c.id === id);
+
+const container = document.getElementById("competition-detail");
+
+if (comp) {
+    container.innerHTML = `
+        <h1 style="color:#d4af37;">${comp.title}</h1>
+        <p>${comp.description}</p>
+
+        <p><strong>Level:</strong> ${comp.level}</p>
+        <p><strong>Category:</strong> ${comp.category}</p>
+        <p><strong>Location:</strong> ${comp.location}</p>
+        <p><strong>Status:</strong> ${comp.status}</p>
+
+        <br>
+
+        <a href="competitions.html" style="color:#d4af37;">← Back to Competitions</a>
+    `;
+} else {
+    container.innerHTML = "<h1>Competition not found</h1>";
+}
+</script>
+
+</body>
+</html>
