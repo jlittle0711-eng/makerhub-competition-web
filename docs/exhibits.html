@@ -4,6 +4,26 @@
 <meta charset="UTF-8">
 <title>Exhibits</title>
 <link rel="stylesheet" href="styles.css">
+
+<style>
+.exhibit-card {
+    border: 2px solid red;
+    padding: 15px;
+    margin: 15px;
+    cursor: pointer;
+}
+
+.exhibit-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0 12px #d4af37;
+}
+
+.exhibit-title {
+    color: #d4af37;
+    text-decoration: underline;
+}
+</style>
+
 </head>
 
 <body>
@@ -12,6 +32,33 @@
 <script src="loadComponents.js"></script>
 
 <h1>Exhibits</h1>
+
+<div id="exhibit-list"></div>
+
+<script src="data/exhibits.js?v=1"></script>
+
+<script>
+const container = document.getElementById("exhibit-list");
+
+exhibits.forEach(ex => {
+    const div = document.createElement("div");
+    div.className = "exhibit-card";
+
+    div.onclick = () => {
+        window.location.href = `exhibit.html?id=${ex.id}`;
+    };
+
+    div.innerHTML = `
+        <h2 class="exhibit-title">${ex.title}</h2>
+        <p>${ex.description}</p>
+        <p><strong>Level:</strong> ${ex.level}</p>
+        <p><strong>Category:</strong> ${ex.category}</p>
+        <p><strong>Status:</strong> ${ex.status}</p>
+    `;
+
+    container.appendChild(div);
+});
+</script>
 
 </body>
 </html>

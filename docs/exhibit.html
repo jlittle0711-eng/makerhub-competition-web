@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Exhibit</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div id="nav-container"></div>
+<script src="loadComponents.js"></script>
+
+<div id="exhibit-detail" style="padding:20px;"></div>
+
+<script src="data/exhibits.js?v=1"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+const ex = exhibits.find(e => e.id === id);
+
+const container = document.getElementById("exhibit-detail");
+
+if (ex) {
+    container.innerHTML = `
+        <h1 style="color:#d4af37;">${ex.title}</h1>
+        <p>${ex.description}</p>
+
+        <p><strong>Level:</strong> ${ex.level}</p>
+        <p><strong>Category:</strong> ${ex.category}</p>
+        <p><strong>Age Group:</strong> ${ex.age_group}</p>
+        <p><strong>Location:</strong> ${ex.location}</p>
+        <p><strong>Status:</strong> ${ex.status}</p>
+
+        <h2>Specifications</h2>
+        <ul>
+            ${Object.entries(ex.specs).map(([k,v]) => `<li>${k}: ${v}</li>`).join("")}
+        </ul>
+
+        <h2>Requirements</h2>
+        <ul>
+            ${ex.requirements.map(r => `<li>${r}</li>`).join("")}
+        </ul>
+
+        <h2>Evaluation</h2>
+        <ul>
+            ${Object.entries(ex.evaluation).map(([k,v]) => `<li>${k}: ${v}%</li>`).join("")}
+        </ul>
+
+        <h2>Awards</h2>
+        <ul>
+            ${Object.entries(ex.awards).map(([k,v]) => `<li>${k}: ${v}</li>`).join("")}
+        </ul>
+
+        <h2>Schedule</h2>
+        <ul>
+            <li>Submission Deadline: ${ex.schedule.submission_deadline}</li>
+            <li>Display Date: ${ex.schedule.display_date}</li>
+        </ul>
+
+        <br>
+
+        <a href="exhibits.html" style="color:#d4af37;">
+            ← Back to Exhibits
+        </a>
+    `;
+} else {
+    container.innerHTML = "<h1>Exhibit not found</h1>";
+}
+</script>
+
+</body>
+</html>
