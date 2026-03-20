@@ -5,18 +5,10 @@ body {
     color: white;
 }
 
-/* NAVBAR */
 .navbar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding: 15px 30px;
-    background-color: black;
-}
-
-.logo {
-    font-size: 22px;
-    font-weight: bold;
 }
 
 .nav-links {
@@ -26,24 +18,14 @@ body {
 }
 
 .nav-links a {
-    text-decoration: none;
     color: white;
+    text-decoration: none;
 }
 
-/* HERO */
 .hero {
     text-align: center;
     padding: 120px 20px;
     background: linear-gradient(to right, black, #d4af37);
-}
-
-.hero h1 {
-    font-size: 48px;
-}
-
-.hero p {
-    margin-top: 10px;
-    font-size: 18px;
 }
 
 .cta-button {
@@ -51,6 +33,4 @@ body {
     padding: 12px 25px;
     background-color: black;
     color: #d4af37;
-    border: none;
-    cursor: pointer;
 }
