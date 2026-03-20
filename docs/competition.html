@@ -13,11 +13,11 @@
 
 <div id="competition-detail" style="padding:20px;"></div>
 
-<script src="data/competitions.js"></script>
+<script src="data/competitions.js?v=2"></script>
 
 <script>
 const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
+const id = params.get('id');
 
 const comp = competitions.find(c => c.id === id);
 
@@ -30,8 +30,35 @@ if (comp) {
 
         <p><strong>Level:</strong> ${comp.level}</p>
         <p><strong>Category:</strong> ${comp.category}</p>
+        <p><strong>Age Group:</strong> ${comp.age_group}</p>
         <p><strong>Location:</strong> ${comp.location}</p>
         <p><strong>Status:</strong> ${comp.status}</p>
+
+        <h2>Specifications</h2>
+        <ul>
+            ${Object.entries(comp.specs).map(([k,v]) => `<li><strong>${k}:</strong> ${v}</li>`).join("")}
+        </ul>
+
+        <h2>Rules</h2>
+        <ul>
+            ${comp.rules.map(r => `<li>${r}</li>`).join("")}
+        </ul>
+
+        <h2>Judging Criteria</h2>
+        <ul>
+            ${Object.entries(comp.judging).map(([k,v]) => `<li><strong>${k}:</strong> ${v}%</li>`).join("")}
+        </ul>
+
+        <h2>Awards</h2>
+        <ul>
+            ${Object.entries(comp.awards).map(([k,v]) => `<li><strong>${k}:</strong> ${v}</li>`).join("")}
+        </ul>
+
+        <h2>Schedule</h2>
+        <ul>
+            <li><strong>Entry Deadline:</strong> ${comp.schedule.entry_deadline}</li>
+            <li><strong>Event Date:</strong> ${comp.schedule.event_date}</li>
+        </ul>
 
         <br>
 
