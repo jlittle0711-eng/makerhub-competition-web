@@ -12,32 +12,39 @@
 
 <button onclick="logout()">Logout</button>
 
-<h2>Create New Entry</h2>
+<h2>Create Entry</h2>
 
 <select id="type">
     <option value="competition">Competition</option>
     <option value="exhibit">Exhibit</option>
-</select>
-
-<br><br>
+</select><br><br>
 
 <input id="title" placeholder="Title"><br><br>
 <textarea id="description" placeholder="Description"></textarea><br><br>
 
 <button onclick="submitEntry()">Submit</button>
 
-<h2>Submitted Items</h2>
+<h2>Database Entries</h2>
 
 <div id="list"></div>
 
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+<script src="firebase-config.js"></script>
+
 <script>
-if (localStorage.getItem("admin") !== "true") {
-    window.location.href = "admin.html";
-}
+auth.onAuthStateChanged(user => {
+    if (!user) {
+        window.location.href = "admin.html";
+    }
+});
 
 function logout() {
-    localStorage.removeItem("admin");
-    window.location.href = "admin.html";
+    auth.signOut().then(() => {
+        window.location.href = "admin.html";
+    });
 }
 
 function submitEntry() {
@@ -45,38 +52,42 @@ function submitEntry() {
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
 
-    const data = JSON.parse(localStorage.getItem("submissions") || "[]");
-
-    data.push({ type, title, description });
-
-    localStorage.setItem("submissions", JSON.stringify(data));
-
-    render();
-}
-
-function render() {
-    const container = document.getElementById("list");
-    const data = JSON.parse(localStorage.getItem("submissions") || "[]");
-
-    container.innerHTML = "";
-
-    data.forEach(item => {
-        const div = document.createElement("div");
-        div.style.border = "1px solid #ccc";
-        div.style.margin = "10px";
-        div.style.padding = "10px";
-
-        div.innerHTML = `
-            <strong>${item.type.toUpperCase()}</strong>
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
-        `;
-
-        container.appendChild(div);
+    db.collection("entries").add({
+        type,
+        title,
+        description,
+        created: new Date()
+    }).then(() => {
+        alert("Saved to database");
+        loadEntries();
     });
 }
 
-render();
+function loadEntries() {
+    const container = document.getElementById("list");
+    container.innerHTML = "";
+
+    db.collection("entries").get().then(snapshot => {
+        snapshot.forEach(doc => {
+            const item = doc.data();
+
+            const div = document.createElement("div");
+            div.style.border = "1px solid #ccc";
+            div.style.margin = "10px";
+            div.style.padding = "10px";
+
+            div.innerHTML = `
+                <strong>${item.type}</strong>
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+            `;
+
+            container.appendChild(div);
+        });
+    });
+}
+
+loadEntries();
 </script>
 
 </body>
