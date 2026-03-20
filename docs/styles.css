@@ -1,32 +1,51 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #111;
-    color: #fff;
+    background: black;
+    color: white;
 }
 
-.mh-hero {
+.nav {
+    background: black;
+    padding: 15px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+.hero {
     text-align: center;
     padding: 100px 20px;
-    background: linear-gradient(135deg, #f5c400, #333);
+    background: linear-gradient(to right, gold, black);
 }
 
-.mh-hero h1 {
-    font-size: 3em;
+.cta {
+    padding: 15px 30px;
+    background: black;
+    color: gold;
+    border: none;
+    cursor: pointer;
 }
 
-.mh-cta {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 12px 24px;
-    background: #000;
-    color: #f5c400;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.mh-section {
-    padding: 60px 20px;
-    max-width: 800px;
-    margin: auto;
+.content {
+    padding: 50px;
 }
