@@ -16,11 +16,9 @@
 <script src="data/competitions.js"></script>
 
 <script>
-// Get ID from URL
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-// Find matching competition
 const comp = competitions.find(c => c.id === id);
 
 const container = document.getElementById("competition-detail");
@@ -37,7 +35,15 @@ if (comp) {
 
         <br>
 
-        <a href="competitions.html" style="color:#d4af37;">← Back to Competitions</a>
+        <a href="scoring.html?id=${comp.id}" style="color:#d4af37;">
+            Start Scoring →
+        </a>
+
+        <br><br>
+
+        <a href="competitions.html" style="color:#d4af37;">
+            ← Back to Competitions
+        </a>
     `;
 } else {
     container.innerHTML = "<h1>Competition not found</h1>";

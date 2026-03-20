@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Scoring</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div id="nav-container"></div>
+<script src="loadComponents.js"></script>
+
+<div style="padding:20px;">
+    <h1>Competition Scoring</h1>
+
+    <div id="competition-name"></div>
+
+    <h3>Judge Evaluation</h3>
+
+    <label>Precision:</label><br>
+    <input type="number" id="precision" min="0" max="10"><br><br>
+
+    <label>Speed:</label><br>
+    <input type="number" id="speed" min="0" max="10"><br><br>
+
+    <label>Quality:</label><br>
+    <input type="number" id="quality" min="0" max="10"><br><br>
+
+    <button onclick="calculateScore()">Submit Score</button>
+
+    <h2 id="result"></h2>
+</div>
+
+<script src="data/competitions.js"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id");
+
+const comp = competitions.find(c => c.id === id);
+
+document.getElementById("competition-name").innerHTML =
+    `<h2 style="color:#d4af37;">${comp.title}</h2>`;
+
+function calculateScore() {
+    const precision = Number(document.getElementById("precision").value);
+    const speed = Number(document.getElementById("speed").value);
+    const quality = Number(document.getElementById("quality").value);
+
+    const total = precision + speed + quality;
+
+    document.getElementById("result").innerText =
+        "Total Score: " + total;
+}
+</script>
+
+</body>
+</html>
