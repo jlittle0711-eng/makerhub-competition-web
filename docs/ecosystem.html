@@ -15,10 +15,9 @@
 
 <div id="eco-list"></div>
 
-<!-- ✅ CORRECT FIREBASE SCRIPTS -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
 <script src="firebase-config.js"></script>
 
 <script>
@@ -26,16 +25,15 @@ const container = document.getElementById("eco-list");
 
 async function render() {
     try {
-        console.log("🔥 Firebase starting...");
+        console.log("🔥 STARTING FIREBASE LOAD");
 
-        const snapshot = await db.collection("entries")
-            .where("status", "==", "live")
-            .get();
+        // 🚨 NO FILTER — GET EVERYTHING
+        const snapshot = await db.collection("entries").get();
 
-        console.log("📦 Docs:", snapshot.size);
+        console.log("📦 DOCUMENT COUNT:", snapshot.size);
 
         if (snapshot.empty) {
-            container.innerHTML = "<p>No live entries found.</p>";
+            container.innerHTML = "<p>No entries found in database.</p>";
             return;
         }
 
@@ -43,6 +41,8 @@ async function render() {
 
         snapshot.forEach(doc => {
             const item = doc.data();
+
+            console.log("✅ ITEM:", item);
 
             const div = document.createElement("div");
             div.style.border = "2px solid red";
@@ -59,9 +59,10 @@ async function render() {
             };
 
             div.innerHTML = `
-                <strong>${item.type}</strong>
-                <h2 style="color:#d4af37;">${item.title}</h2>
-                <p>${item.description}</p>
+                <strong>${item.type || "UNKNOWN"}</strong>
+                <h2 style="color:#d4af37;">${item.title || "No Title"}</h2>
+                <p>${item.description || "No Description"}</p>
+                <p><strong>Status:</strong> ${item.status || "none"}</p>
             `;
 
             container.appendChild(div);
