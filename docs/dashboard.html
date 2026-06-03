@@ -1,128 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Reference</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+<main class="page-shell">
+    <section class="status-notice">
+        <strong>Prototype/reference site.</strong>
+        This dashboard shows static sample states only. Public browsing does not sign in, read records, or publish updates.
+    </section>
 
-<h1>Admin Dashboard</h1>
+    <h1>Dashboard Reference</h1>
 
-<button onclick="logout()">Logout</button>
+    <section class="reference-grid" aria-label="Sample workflow states">
+        <article>
+            <p class="eyebrow">Draft</p>
+            <h2>Robotics Assembly Challenge</h2>
+            <p>Sample entry awaiting review.</p>
+        </article>
 
-<h2>Create Entry (Draft)</h2>
+        <article>
+            <p class="eyebrow">Approved</p>
+            <h2>CNC Speed Challenge</h2>
+            <p>Sample entry approved for publication.</p>
+        </article>
 
-<select id="type">
-    <option value="competition">Competition</option>
-    <option value="exhibit">Exhibit</option>
-</select><br><br>
+        <article>
+            <p class="eyebrow">Live</p>
+            <h2>3D Printed Tool Design</h2>
+            <p>Sample exhibit visible in the public reference catalog.</p>
+        </article>
+    </section>
 
-<input id="title" placeholder="Title"><br><br>
-<textarea id="description" placeholder="Description"></textarea><br><br>
-
-<button onclick="submitEntry()">Save Draft</button>
-
-<h2>Entries</h2>
-
-<h3>Draft</h3>
-<div id="drafts"></div>
-
-<h3>Approved</h3>
-<div id="approved"></div>
-
-<h3>Live</h3>
-<div id="live"></div>
-
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
-<script src="firebase-config.js"></script>
-
-<script>
-auth.onAuthStateChanged(user => {
-    if (!user) window.location.href = "admin.html";
-});
-
-function logout() {
-    auth.signOut().then(() => window.location.href = "admin.html");
-}
-
-function submitEntry() {
-    const type = document.getElementById("type").value;
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-
-    db.collection("entries").add({
-        type,
-        title,
-        description,
-        status: "draft",
-        created: new Date()
-    }).then(() => {
-        alert("Draft saved");
-        loadEntries();
-    });
-}
-
-function updateStatus(id, status) {
-    db.collection("entries").doc(id).update({ status }).then(loadEntries);
-}
-
-function renderItem(doc) {
-    const item = doc.data();
-
-    const div = document.createElement("div");
-    div.style.border = "1px solid #ccc";
-    div.style.margin = "10px";
-    div.style.padding = "10px";
-
-    div.innerHTML = `
-        <strong>${item.type}</strong>
-        <h3>${item.title}</h3>
-        <p>${item.description}</p>
-    `;
-
-    if (item.status === "draft") {
-        div.innerHTML += `
-            <button onclick="updateStatus('${doc.id}','approved')">Approve</button>
-        `;
-    }
-
-    if (item.status === "approved") {
-        div.innerHTML += `
-            <button onclick="updateStatus('${doc.id}','live')">Publish</button>
-        `;
-    }
-
-    return div;
-}
-
-function loadEntries() {
-    const drafts = document.getElementById("drafts");
-    const approved = document.getElementById("approved");
-    const live = document.getElementById("live");
-
-    drafts.innerHTML = "";
-    approved.innerHTML = "";
-    live.innerHTML = "";
-
-    db.collection("entries").get().then(snapshot => {
-        snapshot.forEach(doc => {
-            const item = doc.data();
-            const div = renderItem(doc);
-
-            if (item.status === "draft") drafts.appendChild(div);
-            if (item.status === "approved") approved.appendChild(div);
-            if (item.status === "live") live.appendChild(div);
-        });
-    });
-}
-
-loadEntries();
-</script>
-
+    <p><a href="admin.html">Back to Admin Reference</a></p>
+</main>
 </body>
 </html>

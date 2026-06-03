@@ -1,42 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Reference</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+<main class="page-shell">
+    <section class="status-notice">
+        <strong>Prototype/reference site.</strong>
+        Admin sign-in is disabled on this public demo. This page documents the intended workflow without connecting to live services.
+    </section>
 
-<h1>Admin Login</h1>
+    <h1>Admin Reference</h1>
+    <p class="lede">The production admin workflow is intentionally offline in this public reference build.</p>
 
-<input id="email" placeholder="Email"><br><br>
-<input id="password" type="password" placeholder="Password"><br><br>
+    <form class="reference-form" aria-label="Disabled admin sign-in">
+        <label>
+            Email
+            <input placeholder="Disabled in public prototype" disabled>
+        </label>
+        <label>
+            Password
+            <input type="password" placeholder="Disabled in public prototype" disabled>
+        </label>
+        <button type="button" disabled>Sign-in disabled</button>
+    </form>
 
-<button onclick="login()">Login</button>
-
-<p id="status"></p>
-
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
-<script src="firebase-config.js"></script>
-
-<script>
-function login() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    auth.signInWithEmailAndPassword(email, password)
-        .then(() => {
-            window.location.href = "dashboard.html";
-        })
-        .catch(err => {
-            document.getElementById("status").innerText = err.message;
-        });
-}
-</script>
-
+    <p class="muted">Use the dashboard reference page to view static sample moderation states.</p>
+    <p><a href="dashboard.html">Open Dashboard Reference</a></p>
+</main>
 </body>
 </html>

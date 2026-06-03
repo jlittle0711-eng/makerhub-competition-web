@@ -1,21 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>MakerHub</title>
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakerHub Competition System</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
+    <main class="page-shell">
+        <section class="status-notice">
+            <strong>Prototype/reference site.</strong>
+            This public demo uses static sample content only. Live backend services, sign-in, and publishing workflows are disabled.
+        </section>
 
-<div id="nav-container"></div>
-<script src="loadComponents.js"></script>
+        <h1>MakerHub Competition System</h1>
+        <p class="lede">Reference pages for competition and exhibit workflows.</p>
 
-<section class="hero">
-<h1>MakerHub Competition System</h1>
-<p>Where Skills Are Built, Tested, and Proven</p>
-<button class="cta-button">Join the Movement</button>
-</section>
+        <nav class="reference-nav" aria-label="Reference pages">
+            <a href="competitions.html">Competitions</a>
+            <a href="exhibits.html">Exhibits</a>
+            <a href="ecosystem.html">Ecosystem</a>
+            <a href="admin.html">Admin Reference</a>
+            <a href="dashboard.html">Dashboard Reference</a>
+        </nav>
 
+        <h2>Demo Competitions</h2>
+        <div id="competition-list">Loading demo competitions...</div>
+    </main>
+
+    <script src="live-data.js"></script>
 </body>
 </html>

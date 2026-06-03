@@ -5,6 +5,84 @@ body {
     color: white;
 }
 
+a {
+    color: #d4af37;
+}
+
+.page-shell {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 32px 20px 56px;
+}
+
+.status-notice {
+    border: 1px solid #d4af37;
+    background: #171717;
+    color: white;
+    padding: 14px 16px;
+    margin-bottom: 28px;
+}
+
+.lede,
+.muted {
+    color: #cfcfcf;
+}
+
+.reference-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 24px 0 34px;
+}
+
+.reference-nav a,
+.reference-form button {
+    border: 1px solid #d4af37;
+    background: #111;
+    color: #d4af37;
+    padding: 10px 14px;
+    text-decoration: none;
+}
+
+.reference-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.reference-grid article,
+.reference-card {
+    border: 1px solid #444;
+    background: #111;
+    padding: 16px;
+}
+
+.eyebrow {
+    color: #d4af37;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.reference-form {
+    display: grid;
+    gap: 14px;
+    max-width: 420px;
+}
+
+.reference-form label {
+    display: grid;
+    gap: 6px;
+}
+
+.reference-form input {
+    border: 1px solid #555;
+    background: #222;
+    color: white;
+    padding: 10px;
+}
+
 .navbar {
     display: flex;
     justify-content: space-between;

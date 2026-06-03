@@ -1,81 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MakerHub Ecosystem</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-
 <div id="nav-container"></div>
 <script src="loadComponents.js"></script>
 
-<h1>MakerHub Ecosystem</h1>
+<main class="page-shell">
+    <section class="status-notice">
+        <strong>Prototype/reference site.</strong>
+        This ecosystem view uses static demo entries only and does not connect to live services.
+    </section>
 
-<div id="eco-list"></div>
+    <h1>MakerHub Ecosystem</h1>
+    <div id="eco-list" class="reference-grid"></div>
+</main>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
-
+<script src="data/competitions.js"></script>
+<script src="data/exhibits.js"></script>
 <script>
 const container = document.getElementById("eco-list");
+const items = [
+    ...competitions.map(item => ({ ...item, type: "Competition" })),
+    ...exhibits.map(item => ({ ...item, type: "Exhibit" }))
+];
 
-async function render() {
-    try {
-        console.log("🔥 STARTING FIREBASE LOAD");
-
-        // 🚨 NO FILTER — GET EVERYTHING
-        const snapshot = await db.collection("entries").get();
-
-        console.log("📦 DOCUMENT COUNT:", snapshot.size);
-
-        if (snapshot.empty) {
-            container.innerHTML = "<p>No entries found in database.</p>";
-            return;
-        }
-
-        container.innerHTML = "";
-
-        snapshot.forEach(doc => {
-            const item = doc.data();
-
-            console.log("✅ ITEM:", item);
-
-            const div = document.createElement("div");
-            div.style.border = "2px solid red";
-            div.style.margin = "15px";
-            div.style.padding = "15px";
-            div.style.cursor = "pointer";
-
-            div.onclick = () => {
-                if (item.type === "competition") {
-                    window.location.href = `competition-live.html?id=${doc.id}`;
-                } else {
-                    window.location.href = `exhibit-live.html?id=${doc.id}`;
-                }
-            };
-
-            div.innerHTML = `
-                <strong>${item.type || "UNKNOWN"}</strong>
-                <h2 style="color:#d4af37;">${item.title || "No Title"}</h2>
-                <p>${item.description || "No Description"}</p>
-                <p><strong>Status:</strong> ${item.status || "none"}</p>
-            `;
-
-            container.appendChild(div);
-        });
-
-    } catch (err) {
-        console.error("🔥 ERROR:", err);
-        container.innerHTML = "<p style='color:red;'>Error loading data</p>";
-    }
-}
-
-render();
+container.innerHTML = items.map(item => `
+    <article>
+        <p class="eyebrow">${item.type}</p>
+        <h2>${item.title}</h2>
+        <p>${item.description}</p>
+        <p><strong>Status:</strong> ${item.status}</p>
+    </article>
+`).join("");
 </script>
-
 </body>
 </html>
