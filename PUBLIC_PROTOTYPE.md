@@ -22,8 +22,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\verify-public-protot
 
 The verifier checks that the public Pages routes stay browsable without live backend dependency markers and that the prototype/reference notice remains visible.
 
-## Loose Root Files
+## Legacy Reference Files
 
-As of 2026-06-03, the untracked root-level `ecosystem.html` is classified as a stale local reference draft. It is not part of the tracked GitHub Pages source, which is built from `docs/`, and it does not affect the public site.
+As of 2026-06-03, the former untracked root-level `ecosystem.html` is classified as a stale local reference draft. It was moved to `reference/legacy/ecosystem-root-2026-03-20.html` for preservation.
 
-Do not delete it without Jay's explicit approval. Recommended action is to leave it untracked for now, or move it into an intentional archive/reference location in a separate cleanup if Jay wants to preserve the draft.
+The archived copy is not part of the tracked GitHub Pages source, which is built from `docs/`, and it does not affect the public site.
